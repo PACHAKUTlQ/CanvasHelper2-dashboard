@@ -124,7 +124,8 @@ function loadlink() {
             type: 'POST',
             headers: getAccessTokenHeaders(),
             error: function (data) {
-                console.log(data)
+                console.log("Failed to open the web browser.");
+                window.open(link);
             }
         });
     });
