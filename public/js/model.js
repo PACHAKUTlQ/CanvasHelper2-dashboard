@@ -69,6 +69,9 @@ function refreshToken() {
         headers: getAccessTokenHeaders(),
         data: JSON.stringify({ refresh_token: refreshToken }),
         contentType: 'application/json',
+        success: function (data) {
+            localStorage.setItem('accessToken', data.new_access_token);
+        },
         error: function (data) {
             console.log(data)
         }
@@ -282,8 +285,8 @@ $(document).ready(function () {
         sendreq();
     });
 
-    setInterval(soft_refresh, 60 * 1000);
-    setInterval(refreshToken, 60 * 60 * 1000);
+    setInterval(soft_refresh, 60 * 1000);       // Update list
+    setInterval(refreshToken, 60 * 1000);  // Refresh auth_token
 });
 
 function soft_refresh() {
