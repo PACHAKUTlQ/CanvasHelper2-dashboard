@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up a CanvasHelper2 account</title>
     <script src="./js/jquery-3.6.0.min.js"></script>
-    <script src="./js/serverURL.js"></script>
+    <script src="./js/localStorages.js"></script>
 </head>
 
 <body>
@@ -34,11 +34,16 @@
                 url: signUpEndpoint,
                 type: 'POST',
                 contentType: 'application/x-www-form-urlencoded', // Form data type
+                headers: getAccessTokenHeaders(),
                 data: formData,
-                xhrFields: {
-                    withCredentials: true
-                },
+                // xhrFields: {
+                //     withCredentials: true
+                // },
                 success: function (data) {
+                    // Save tokens to local storage
+                    localStorage.setItem('accessToken', data.access_token);
+                    localStorage.setItem('refreshToken', data.refresh_token);
+
                     console.log('Successfully signed up:', data.message);
                     // document.cookie = `auth_token=${data.auth_token}; path=/; SameSite=None; Secure`;
                     setTimeout(`location.href = './login'`, 1000);

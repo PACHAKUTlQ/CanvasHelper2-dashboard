@@ -7,6 +7,10 @@ function getServerURL() {
 
     if (!serverURL) {
         serverURL = window.prompt("Please enter the server URL:", defaultURL);
+        // If closed without entering anything, use the default URL
+        if (!serverURL) {
+            serverURL = defaultURL;
+        }
         // If url not start with http:// or https://, add it
         if (!serverURL.startsWith("http://") && !serverURL.startsWith("https://")) {
             serverURL = "http://" + serverURL;
@@ -15,12 +19,13 @@ function getServerURL() {
         if (serverURL.endsWith("/")) {
             serverURL = serverURL.slice(0, -1);
         }
-        // If closed without entering anything, use the default URL
-        if (!serverURL) {
-            serverURL = defaultURL;
-        }
         localStorage.setItem("serverURL", serverURL);
     }
 
     return serverURL;
+}
+
+function getAccessTokenHeaders() {
+    const accessToken = localStorage.getItem('accessToken');
+    return { 'Authorization': `Bearer ${accessToken}` };
 }

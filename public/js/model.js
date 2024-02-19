@@ -80,9 +80,7 @@ function updatecheck() {
             data: JSON.stringify(smsg),
             contentType: 'application/json',
             type: 'POST',
-            xhrFields: {
-                withCredentials: true
-            },
+            headers: getAccessTokenHeaders(),
             error: function (data) {
                 console.log(data)
             }
@@ -92,11 +90,12 @@ function updatecheck() {
 
 function refreshToken() {
     console.log("Refreshing Token");
+    const refreshToken = localStorage.getItem('refreshToken');
     $.ajax(apilink(`/refresh`), {
         type: 'POST',
-        xhrFields: {
-            withCredentials: true
-        },
+        headers: getAccessTokenHeaders(),
+        data: JSON.stringify({ refresh_token: refreshToken }),
+        contentType: 'application/json',
         error: function (data) {
             console.log(data)
         }
@@ -123,9 +122,7 @@ function loadlink() {
             data: JSON.stringify(smsg),
             contentType: 'application/json',
             type: 'POST',
-            xhrFields: {
-                withCredentials: true
-            },
+            headers: getAccessTokenHeaders(),
             error: function (data) {
                 console.log(data)
             }
@@ -152,9 +149,7 @@ function getcache() {
     if (window.udatap['bid']) {
         $.ajax(apilink('/canvas/dashboard?cache=true'), {
             type: 'GET',
-            xhrFields: {
-                withCredentials: true
-            },
+            headers: getAccessTokenHeaders(),
             error: function (data) {
                 $("#b1").text("Please check your Internet connection");
                 window.isupdating = 0;
@@ -177,9 +172,7 @@ function sendreq() {
     }
     $.ajax(apilink('/canvas/dashboard'), {
         type: 'GET',
-        xhrFields: {
-            withCredentials: true
-        },
+        headers: getAccessTokenHeaders(),
         error: function (data) {
             $("#b1").text("Please check your Internet connection");
             window.isupdating = 0;
@@ -232,9 +225,7 @@ function setupConfig() {
         $.ajax({
             url: apilink('/config/verify'),
             type: 'GET',
-            xhrFields: {
-                withCredentials: true
-            },
+            headers: getAccessTokenHeaders(),
             success: function () {
                 // Success callback
             },
@@ -248,9 +239,7 @@ function setupConfig() {
             url: apilink('/config'),
             type: 'GET',
             dataType: 'text',
-            xhrFields: {
-                withCredentials: true
-            },
+            headers: getAccessTokenHeaders(),
             success: function (data) {
                 window.udata = data;
                 try {
@@ -429,18 +418,14 @@ function sendpos() {
         data: JSON.stringify(smsg),
         contentType: 'application/json',
         type: 'PUT',
-        xhrFields: {
-            withCredentials: true
-        }
+        headers: getAccessTokenHeaders(),
     });
 }
 
 function setpos() {
     $.ajax(apilink('/canvas/position'), {
         type: 'GET',
-        xhrFields: {
-            withCredentials: true
-        },
+        headers: getAccessTokenHeaders(),
         error: function (data) {
             showup();
         }
