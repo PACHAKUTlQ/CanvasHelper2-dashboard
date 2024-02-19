@@ -62,7 +62,6 @@ function updatecheck() {
 }
 
 function refreshToken() {
-    console.log("Refreshing Token");
     const refreshToken = localStorage.getItem('refreshToken');
     $.ajax(apilink(`/refresh`), {
         type: 'POST',
@@ -70,6 +69,7 @@ function refreshToken() {
         data: JSON.stringify({ refresh_token: refreshToken }),
         contentType: 'application/json',
         success: function (data) {
+            console.log("Refreshed accessToken");
             localStorage.setItem('accessToken', data.new_access_token);
         },
         error: function (data) {
