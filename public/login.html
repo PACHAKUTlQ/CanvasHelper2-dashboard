@@ -36,16 +36,12 @@
                 contentType: 'application/x-www-form-urlencoded', // Form data type
                 headers: getAccessTokenHeaders(),
                 data: formData,
-                // xhrFields: {
-                //     withCredentials: true
-                // },
                 success: function (data) {
                     // Save tokens to local storage
                     localStorage.setItem('accessToken', data.access_token);
                     localStorage.setItem('refreshToken', data.refresh_token);
 
                     console.log('Login successful:', data.message);
-                    // document.cookie = `auth_token=${data.auth_token}; path=/; SameSite=None; Secure`;
                     setTimeout(`location.href = '.'`, 1000);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {

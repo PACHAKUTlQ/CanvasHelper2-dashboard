@@ -11,8 +11,6 @@ function loadcheck() {
         } else if ($(this).hasClass('important')) {
             $(this).html('');
             $(this).next().addClass("imptext");
-        } else {
-
         }
     });
 }
@@ -35,7 +33,6 @@ function updatecheck() {
             $(this).next().removeClass("wrong");
             $(this).next().addClass("imptext");
         } else if ($(this).hasClass('important')) {
-            newtype = 0;
             $(this).removeClass('important');
             $(this).html('');
             $(this).next().removeClass("imptext");
@@ -63,13 +60,18 @@ function updatecheck() {
 
 function refreshToken() {
     const refreshToken = localStorage.getItem('refreshToken');
+    const formData = new FormData();
+    formData.append('username', 'refreshToken');
+    formData.append('password', refreshToken);
+
     $.ajax(apilink(`/refresh`), {
         type: 'POST',
         headers: getAccessTokenHeaders(),
-        data: JSON.stringify({ refresh_token: refreshToken }),
-        contentType: 'application/json',
+        data: formData,
+        processData: false, // Prevent jQuery from converting the data into a query string
+        contentType: false, // The contentType is automatically set to 'multipart/form-data'.
         success: function (data) {
-            console.log("Refreshed accessToken");
+            console.log("Refreshed token at " + Date());
             localStorage.setItem('accessToken', data.new_access_token);
         },
         error: function (data) {
@@ -94,16 +96,17 @@ function loadlink() {
         let smsg = {
             "url": link
         }
-        $.ajax(apilink(`/browser`), {
-            data: JSON.stringify(smsg),
-            contentType: 'application/json',
-            type: 'POST',
-            headers: getAccessTokenHeaders(),
-            error: function (data) {
-                console.log("Failed to open the web browser.");
-                window.open(link);
-            }
-        });
+        // $.ajax(apilink(`/browser`), {
+        //     data: JSON.stringify(smsg),
+        //     contentType: 'application/json',
+        //     type: 'POST',
+        //     headers: getAccessTokenHeaders(),
+        //     error: function (data) {
+        //         console.log("Failed to open the web browser.");
+        //         window.open(link);
+        //     }
+        // });
+        window.open(link);
     });
 }
 
@@ -119,7 +122,6 @@ function displaydata(data) {
     // One column
     $("#b1").html(data);
     loadupdate();
-    return;
 }
 
 function getcache() {
@@ -164,9 +166,9 @@ function sendreq() {
 }
 
 function getIndex(str, s) {
-    var flag = false;
-    var pa = [];
-    for (var i = 0; i < str.length - s.length + 1; i++) {
+    let flag = false;
+    let pa = [];
+    for (let i = 0; i < str.length - s.length + 1; i++) {
         if (str.substring(i, s.length + i) == s) {
             pa.push(i);
             flag = true;
@@ -257,7 +259,7 @@ function showup() {
     $("#rfsbox").css("visibility", "visible");
 }
 
-var initScrollBar = function () {
+let initScrollBar = function () {
     if (document.querySelector('.foo').fakeScroll && (!document.querySelector('.fakeScroll__content'))) {
         document.querySelector('.foo').fakeScroll({
             track: "smooth"
@@ -285,8 +287,8 @@ $(document).ready(function () {
         sendreq();
     });
 
-    setInterval(soft_refresh, 60 * 1000);       // Update list
-    setInterval(refreshToken, 60 * 1000);  // Refresh auth_token
+    setInterval(soft_refresh, 60 * 1000);       // Update list every minute
+    setInterval(refreshToken, 30 * 60 * 1000);  // Refresh auth_token every 30 minutes
 });
 
 function soft_refresh() {
@@ -295,7 +297,6 @@ function soft_refresh() {
         return;
     }
     window.isupdating = 1;
-    // $("#b1").prepend("<i>Self refreshing...</i>");
     sendreq();
 }
 
@@ -307,7 +308,7 @@ function clearDrag(elmnt) {
 }
 
 function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
@@ -343,10 +344,8 @@ function dragElement(elmnt) {
 }
 
 function dragElement_no(elmnt) {
-    var mydiv = document.getElementById("c1");
-    // mydiv.style.top = mydiv.offsetTop + "px";
-    // mydiv.style.left = mydiv.offsetLeft + "px";
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let mydiv = document.getElementById("c1");
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
@@ -375,16 +374,10 @@ function dragElement_no(elmnt) {
         mydiv.style.width = (mydiv.offsetWidth - pos1) + "px";
         mydiv.style.height = (mydiv.offsetHeight - pos2) + "px";
     }
-    function closeDragElement() {
-        // stop moving when mouse button is released:
-        sendpos();
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
 }
 
 function sendpos() {
-    var mydiv = document.getElementById("c1");
+    const mydiv = document.getElementById("c1");
     let x = mydiv.offsetLeft;
     let y = mydiv.offsetTop;
     let w = mydiv.offsetWidth;
@@ -408,7 +401,7 @@ function setpos() {
         }
     }).done(function (data) {
         try {
-            var mydiv = document.getElementById("c1");
+            const mydiv = document.getElementById("c1");
             mydiv.style.left = data['left'] + "px";
             mydiv.style.top = data['top'] + "px";
             mydiv.style.width = data['width'] + "px";

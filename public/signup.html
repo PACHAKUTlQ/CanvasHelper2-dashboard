@@ -11,14 +11,29 @@
 </head>
 
 <body>
+    <div id="warning-banner" style="display: none; color: white; padding: 10px; text-align: center;"></div>
     <h2>Sign up</h2>
     <form id="signupForm">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
         <br><br>
+
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
         <br><br>
+
+        <label for="password2">Confirm password:</label>
+        <input type="password" id="password2" name="password2" required onchange="checkPasswordMatch()">
+        <br><br>
+
+        <label for="url">Canvas URL:</label>
+        <input type="url" id="url" name="url" required>
+        <br><br>
+
+        <label for="bid">Canvas Access Token:</label>
+        <input type="text" id="bid" name="bid" required>
+        <br><br>
+
         <button type="submit">Sign up</button>
     </form>
 
@@ -26,26 +41,24 @@
         var signUpEndpoint = getServerURL() + '/signup';
         $('#signupForm').on('submit', function (event) {
             event.preventDefault(); // Prevent the default form submission
-
+            // $('#password2').prop('disabled', true);
             // Serialize the form data
-            var formData = $(this).serialize();
+            // var formData = $(this).serialize();
+            var jsonData = JSON.stringify({ username: $('#username').val(), password: $('#password').val(), url: $('#url').val(), bid: $('#bid').val() });
 
             $.ajax({
                 url: signUpEndpoint,
                 type: 'POST',
-                contentType: 'application/x-www-form-urlencoded', // Form data type
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
                 headers: getAccessTokenHeaders(),
-                data: formData,
-                // xhrFields: {
-                //     withCredentials: true
-                // },
+                data: jsonData,
                 success: function (data) {
                     // Save tokens to local storage
                     localStorage.setItem('accessToken', data.access_token);
                     localStorage.setItem('refreshToken', data.refresh_token);
 
                     console.log('Successfully signed up:', data.message);
-                    // document.cookie = `auth_token=${data.auth_token}; path=/; SameSite=None; Secure`;
                     setTimeout(`location.href = './login'`, 1000);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -53,6 +66,27 @@
                 }
             });
         });
+
+        function checkPasswordMatch() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("password2").value;
+            if (password != confirmPassword) {
+                document.getElementById("password2").setCustomValidity("Passwords don't match");
+                showWarningBanner();
+                document.getElementById("password2").value = "";
+                document.getElementById("password2").focus();
+            } else {
+                document.getElementById("password2").setCustomValidity('');
+            }
+        }
+
+        function showWarningBanner() {
+            $('#warning-banner').text('Passwords do not match!').css('background-color', 'red');
+            $('#warning-banner').show();
+            setTimeout(function () {
+                $('#warning-banner').hide();
+            }, 3000);
+        }
     </script>
 </body>
 
