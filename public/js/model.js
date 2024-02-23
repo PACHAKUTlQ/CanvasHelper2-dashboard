@@ -93,9 +93,9 @@ function loadppt() {
 function loadlink() {
     $("span.label").click(function () {
         let link = $(this).attr("url");
-        let smsg = {
-            "url": link
-        }
+        // let smsg = {
+        //     "url": link
+        // }
         // $.ajax(apilink(`/browser`), {
         //     data: JSON.stringify(smsg),
         //     contentType: 'application/json',
