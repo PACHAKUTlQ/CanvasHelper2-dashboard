@@ -5,7 +5,7 @@ body {
     overflow: hidden;
     height: 100%;
     width: 100%;
-    background-color: rgb(255, 255, 255);
+    background-color: whitesmoke;
     font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: row;
@@ -14,10 +14,60 @@ body {
     z-index: 1;
 }
 
-.box{
+.loginButton {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+.signupButton {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    z-index: 100;
+}
+
+.logoutButton {
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    z-index: 100;
+}
+
+.page-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    background: whitesmoke;
+    /* make sure it's on top of other elements */
+    z-index: 300;
+    /* Add overflow auto to enable scrolling */
+    overflow: auto;
+}
+
+body.show-password .page-container {
+    background: black;
+    /* set background color to black if show-password is true */
+}
+
+.login-page-close {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 36px;
+    width: 36px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.box {
     width: 30%;
     height: 75%;
-    background: hsla(0,0%,100%,.5);
+    background: hsla(0, 0%, 100%, .5);
     border-radius: 10px;
     box-shadow: 5px 3px 30px black;
 
@@ -32,7 +82,7 @@ body {
     overflow-y: auto;
 }
 
-.innerbox{
+.innerbox {
     position: absolute;
     left: 2%;
     right: 35px;
@@ -43,60 +93,60 @@ body {
     color: rgb(0, 0, 0);
 }
 
-.rightbox{
+.rightbox {
     position: absolute;
     /* overflow-y: auto; */
     right: 10%;
 }
 
-.resizer{
+.resizer {
     width: 50px;
     height: 50px;
-    position:absolute;
+    position: absolute;
     right: 0px;
     bottom: 0px;
     z-index: 100;
     visibility: hidden;
 }
 
-.ftg{
+.ftg {
     filter: invert(61%) sepia(43%) saturate(6440%) hue-rotate(191deg) brightness(102%) contrast(101%);
 }
 
-.checkbox{
-  background-color: #fff;
-  border: solid 1px #000000;
-  border-radius: 4px;
-  display: inline-block;
-  height: 16px;
-  margin-right: 6px;
-  text-align: center;
-  width: 16px;
-  vertical-align: middle;
+.checkbox {
+    background-color: #fff;
+    border: solid 1px #000000;
+    border-radius: 4px;
+    display: inline-block;
+    height: 16px;
+    margin-right: 6px;
+    text-align: center;
+    width: 16px;
+    vertical-align: middle;
 }
 
-.single{
+.single {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-.ssvg{
+.ssvg {
     margin-bottom: 2px;
     stroke: #fff;
-    width:10px;
-    height:10px;
+    width: 10px;
+    height: 10px;
 }
 
-.delete{
+.delete {
     text-decoration: line-through;
 }
 
-.wrong{
+.wrong {
     color: rgb(160, 160, 160);
 }
 
-.label{
+.label {
     vertical-align: middle;
 }
 
@@ -115,13 +165,13 @@ body {
     border-color: #4c4c4c;
 }
 
-.imptext{
+.imptext {
     font-weight: bolder;
     color: rgb(228, 68, 94);
     /* text-shadow: 1px 1px #000000; */
 }
 
-.refreshicon{
+.refreshicon {
     width: 30px;
     height: 30px;
     position: absolute;
@@ -131,11 +181,11 @@ body {
     z-index: 100;
 }
 
-.refreshicon:hover{
+.refreshicon:hover {
     filter: invert(61%) sepia(43%) saturate(6440%) hue-rotate(191deg) brightness(102%) contrast(101%);
 }
 
-ppt{
+ppt {
     background-color: orange;
     padding-inline: 5px;
     border-radius: 5px;
@@ -143,13 +193,13 @@ ppt{
     text-decoration: underline;
 }
 
-cal{
+cal {
     padding-inline: 5px;
     color: rgb(0, 102, 255);
     text-decoration: underline;
 }
 
-.bgvideo{
+.bgvideo {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -157,7 +207,7 @@ cal{
     z-index: -100;
 }
 
-.calendar{
+.calendar {
     background-color: #38b0ec5c;
     border-radius: 10px;
     margin-right: 15px;
@@ -169,35 +219,37 @@ cal{
     position: relative;
 }
 
-.edit{
+.edit {
     position: absolute;
     right: 3px;
     bottom: 3px;
 }
 
-.edit:hover{
+.edit:hover {
     filter: invert(61%) sepia(43%) saturate(6440%) hue-rotate(191deg) brightness(102%) contrast(101%);
 }
 
 /* Fake scroll */
-.fakeScroll{ overflow:visible !important; }
-
-.fakeScroll__wrap{
-    overflow : hidden;
-    height   : 100%;
-    position : relative;
-    z-index  : 1;
+.fakeScroll {
+    overflow: visible !important;
 }
 
-.fakeScroll__content{
-    height          : 100%;
-    width           : 100%;
+.fakeScroll__wrap {
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.fakeScroll__content {
+    height: 100%;
+    width: 100%;
     /* padding         : 0 32px 0 0; */
     /* right           : -18px; */
-    position        : relative;
-    overflow        : auto;
-    -moz-box-sizing : border-box;
-    box-sizing      : border-box;
+    position: relative;
+    overflow: auto;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 
     scrollbar-width: none;
 }
@@ -206,56 +258,68 @@ cal{
     display: none;
 }
 
-.fakeScroll__track{
-    position : absolute;
-    right    : -15px;
-    top      : 0;
-    bottom   : 0;
-    width    : 9px;
-    cursor   : default;
+.fakeScroll__track {
+    position: absolute;
+    right: -15px;
+    top: 0;
+    bottom: 0;
+    width: 9px;
+    cursor: default;
 }
 
-.fakeScroll__bar{
-    position      : relative;
-    background    : rgba(255,255,255, .4);
-    width         : 100%;
-    border-radius : 4px;
-    right         : 0;
-    top           : 0;
-    z-index       : 0;
-    transition    : background 0.1s;
-    cursor        : -moz-grab;
-    cursor        : -webkit-grab;
+.fakeScroll__bar {
+    position: relative;
+    background: rgba(255, 255, 255, .4);
+    width: 100%;
+    border-radius: 4px;
+    right: 0;
+    top: 0;
+    z-index: 0;
+    transition: background 0.1s;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
 }
 
-.fakeScroll__bar:hover{
-    background    : rgba(255,255,255, .55);
+.fakeScroll__bar:hover {
+    background: rgba(255, 255, 255, .55);
 }
 
-.fakeScroll__bar.fakeScroll--grabbed{
-    cursor     : -moz-grabbing;
-    cursor     : -webkit-grabbing;
-    background : white;
+.fakeScroll__bar.fakeScroll--grabbed {
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    background: white;
 }
 
-body.fakeScroll--grabbed{
-    cursor              : -moz-grabbing;
-    cursor              : -webkit-grabbing;
-    -moz-user-select    : none;
-    -webkit-user-select : none;
-    user-select         : none;
+body.fakeScroll--grabbed {
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
-.foo{
-    position:relative; height:100%; width:100%;
+.foo {
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
-.foo.fakeScroll__scope{ background:none; }
-.foo .fakeScroll__content{ padding: 1em; resize: both; }
-.foo .fakeScroll__wrap{ background:transparent; border-radius:6px; }
+.foo.fakeScroll__scope {
+    background: none;
+}
+
+.foo .fakeScroll__content {
+    padding: 1em;
+    resize: both;
+}
+
+.foo .fakeScroll__wrap {
+    background: transparent;
+    border-radius: 6px;
+}
 
 
-.foo .fakeScroll__track{
+.foo .fakeScroll__track {
     right: 0;
     top: 7%;
     bottom: 10%;
@@ -267,9 +331,13 @@ body.fakeScroll--grabbed{
     transition: .1s;
 }
 
-.foo .fakeScroll__track:hover{
+.foo .fakeScroll__track:hover {
     width: 15px;
     background: #DDD;
 }
 
-.foo .fakeScroll__bar{ background:#1ca0ff; border-radius:5px; transition:.1s box-shadow; }
+.foo .fakeScroll__bar {
+    background: #1ca0ff;
+    border-radius: 5px;
+    transition: .1s box-shadow;
+}

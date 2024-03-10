@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    overflow: hidden;
+}
+
+/* Login box */
+.container {
+    position: relative;
+    z-index: 1;
+    width: 500px;
+    height: 450px;
+    background-color: #fff;
+    box-shadow: 0 8px 50px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    color: #150f99;
+    font-size: 40px;
+    width: 75%;
+    letter-spacing: 10px;
+    margin-bottom: 30px;
+}
+
+.ipt-box {
+    width: 75%;
+    margin: 10px 0;
+    border-radius: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+.ipt-box input {
+    width: 100%;
+    font-size: 16px;
+    padding: 15px;
+    border: 1px solid #150f99;
+    border-radius: 5px;
+    outline: none;
+    background: none;
+    position: relative;
+    z-index: 2;
+}
+
+/* Remove the default eye */
+.ipt-box input[type="password"]::-ms-reveal,
+.ipt-box input[type="password"]::-ms-clear {
+    display: none;
+}
+
+/* Custom eye */
+.ipt-box .eye {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    z-index: 3;
+    cursor: pointer;
+}
+
+/* Login button */
+.btn-login {
+    width: 75%;
+    height: 50px;
+    margin-top: 30px;
+    border: none;
+    outline: none;
+    background-color: #150f99;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 18px;
+    letter-spacing: 8px;
+    text-indent: 8px;
+    cursor: pointer;
+}
+
+/* Light beam */
+.beam {
+    width: 100vw;
+    height: 25vw;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    right: 30px;
+    /* Triangle */
+    clip-path: polygon(100% 50%, 100% 50%, 0 0, 0 100%);
+    transform: translateY(-50%) rotate(var(--beam-deg, 0));
+    /* Pin point for rotation */
+    transform-origin: 100% 50%;
+    transition: transform 0.2s ease-out;
+}
+
+body.show-password {
+    background-color: #000;
+}
+
+body.show-password::before,
+body.show-password::after {
+    display: none;
+}
+
+.show-password .container {
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 50px rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.show-password h1 {
+    color: #fff;
+}
+
+.show-password .ipt-box {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.show-password input {
+    color: #fff;
+    border: 1px solid #000;
+}
+
+.show-password #password {
+    color: #000;
+}
+
+.show-password .beam {
+    background-color: yellow;
+}
+
+.show-password .btn-login {
+    background-color: #fff;
+    color: #000;
+}
+
+.show-password .eye {
+    color: #fff;
+}

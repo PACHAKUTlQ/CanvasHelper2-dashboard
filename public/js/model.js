@@ -60,16 +60,14 @@ function updatecheck() {
 
 function refreshToken() {
     const refreshToken = localStorage.getItem('refreshToken');
-    const formData = new FormData();
-    formData.append('username', 'refreshToken');
-    formData.append('password', refreshToken);
+    const jsonData = JSON.stringify({ username: "/", password: refreshToken, url: "/", bid: "/" });
 
     $.ajax(apilink(`/refresh`), {
         type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
         headers: getAccessTokenHeaders(),
-        data: formData,
-        processData: false, // Prevent jQuery from converting the data into a query string
-        contentType: false, // The contentType is automatically set to 'multipart/form-data'.
+        data: jsonData,
         success: function (data) {
             console.log("Refreshed token at " + Date());
             localStorage.setItem('accessToken', data.new_access_token);
