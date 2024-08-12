@@ -45,7 +45,6 @@ function updatecheck() {
         // Sene request
         // Send check request
         let smsg = { "type": newtype };
-        console.log(apilink(`/canvas/check/${this.id}`));
         $.ajax(apilink(`/canvas/check/${this.id}`), {
             data: JSON.stringify(smsg),
             contentType: 'application/json',
@@ -90,21 +89,7 @@ function loadppt() {
 
 function loadlink() {
     $("span.label").click(function () {
-        let link = $(this).attr("url");
-        // let smsg = {
-        //     "url": link
-        // }
-        // $.ajax(apilink(`/browser`), {
-        //     data: JSON.stringify(smsg),
-        //     contentType: 'application/json',
-        //     type: 'POST',
-        //     headers: getAccessTokenHeaders(),
-        //     error: function (data) {
-        //         console.log("Failed to open the web browser.");
-        //         window.open(link);
-        //     }
-        // });
-        window.open(link);
+        window.open($(this).attr("url"));
     });
 }
 
