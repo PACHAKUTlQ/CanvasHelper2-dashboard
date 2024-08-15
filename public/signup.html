@@ -43,9 +43,6 @@
         var signUpEndpoint = getServerURL() + '/signup';
         $('#signupForm').on('submit', function (event) {
             event.preventDefault(); // Prevent the default form submission
-            // $('#password2').prop('disabled', true);
-            // Serialize the form data
-            // var formData = $(this).serialize();
             var jsonData = JSON.stringify({ username: $('#username').val(), password: $('#password').val(), url: $('#url').val(), bid: $('#bid').val() });
 
             $.ajax({
