@@ -5,7 +5,6 @@ body {
     overflow: hidden;
     height: 100%;
     width: 100%;
-    background-color: whitesmoke;
     font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: row;
@@ -35,6 +34,47 @@ body {
     z-index: 100;
 }
 
+.config {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    height: 36px;
+    width: 36px;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.5);
+    /* transparent */
+    border: 1px solid #ccc;
+
+    /* svg in the center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 160%;
+    color: #404040;
+
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    /* Smooth transition for background color */
+}
+
+.config:hover {
+    background-color: rgba(255, 255, 255, 1);
+    /* Solid white on hover */
+}
+
+.config .octicon-three-bars,
+.config .octicon-arrow-left {
+    fill: #606060;
+    /* Grey color for the SVG */
+}
+
+.config.go-back {
+    left: 10px;
+    /* Position for "Go Back" state */
+}
+
 .page-container {
     display: flex;
     justify-content: flex-start;
@@ -51,17 +91,6 @@ body {
 body.show-password .page-container {
     background: black;
     /* set background color to black if show-password is true */
-}
-
-.login-page-close {
-    display: none;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    height: 36px;
-    width: 36px;
-    cursor: pointer;
-    z-index: 1000;
 }
 
 .box {
@@ -88,7 +117,7 @@ body.show-password .page-container {
     right: 35px;
     top: 1%;
     /* bottom: 1%; */
-    /* overflow: hidden; */
+    overflow: hidden;
     font-size: 17px;
     color: rgb(0, 0, 0);
 }
