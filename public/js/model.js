@@ -108,30 +108,23 @@ function displaydata(data) {
 }
 
 function getcache() {
-    if (window.udatap['bid']) {
-        $.ajax(apilink('/canvas/dashboard?cache=true'), {
-            type: 'GET',
-            headers: getAccessTokenHeaders(),
-            error: function (data) {
-                $("#b1").text("Please check your Internet connection");
-                window.isupdating = 0;
-            }
-        }).done(function (data) {
-            data = data['data'];
-            if (data.length > 5)
-                displaydata(data);
-        });
-    }
+    $.ajax(apilink('/canvas/dashboard?cache=true'), {
+        type: 'GET',
+        headers: getAccessTokenHeaders(),
+        error: function (data) {
+            $("#b1").text("Please check your Internet connection");
+            window.isupdating = 0;
+        }
+    }).done(function (data) {
+        data = data['data'];
+        if (data.length > 5)
+            displaydata(data);
+    });
 }
 
 function sendreq() {
     // Precheck
     if (!window.udatap) return;
-    if (window.udatap['bid'].length < 10) {
-        // Obviously incorrect
-        $("#b1").html("Please check your bid");
-        return;
-    }
     $.ajax(apilink('/canvas/dashboard'), {
         type: 'GET',
         headers: getAccessTokenHeaders(),
