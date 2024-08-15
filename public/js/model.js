@@ -205,7 +205,7 @@ function setupConfig() {
                     return;
                 }
                 add_bg();
-                setpos();
+                showup();
                 setVideobg();
                 $("#b1").html("Updating...");
                 getcache();
@@ -312,7 +312,6 @@ function dragElement(elmnt) {
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     }
     function closeDragElement() {
-        sendpos();
         // stop moving when mouse button is released:
         document.onmouseup = null;
         document.onmousemove = null;
@@ -350,43 +349,4 @@ function dragElement_no(elmnt) {
         mydiv.style.width = (mydiv.offsetWidth - pos1) + "px";
         mydiv.style.height = (mydiv.offsetHeight - pos2) + "px";
     }
-}
-
-function sendpos() {
-    const mydiv = document.getElementById("c1");
-    let x = mydiv.offsetLeft;
-    let y = mydiv.offsetTop;
-    let w = mydiv.offsetWidth;
-    let h = mydiv.offsetHeight;
-    // Send box position
-    const smsg = { "left": x, "top": y, "height": h, "width": w };
-    $.ajax(apilink('/canvas/position'), {
-        data: JSON.stringify(smsg),
-        contentType: 'application/json',
-        type: 'PUT',
-        headers: getAccessTokenHeaders(),
-    });
-}
-
-function setpos() {
-    $.ajax(apilink('/canvas/position'), {
-        type: 'GET',
-        headers: getAccessTokenHeaders(),
-        error: function (data) {
-            showup();
-        }
-    }).done(function (data) {
-        try {
-            const mydiv = document.getElementById("c1");
-            mydiv.style.left = data['left'] + "px";
-            mydiv.style.top = data['top'] + "px";
-            mydiv.style.width = data['width'] + "px";
-            mydiv.style.height = data['height'] + "px";
-            showup();
-        } catch (e) {
-            showup();
-            return;
-        }
-
-    });
 }
