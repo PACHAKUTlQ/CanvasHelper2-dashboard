@@ -18,7 +18,7 @@ body {
     position: relative;
     z-index: 1;
     width: 500px;
-    height: 450px;
+    /* height: 450px; */
     background-color: #fff;
     box-shadow: 0 8px 50px rgba(0, 0, 0, 0.08);
     border-radius: 10px;
@@ -26,6 +26,39 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.tabs {
+    display: flex;
+    width: 100%;
+}
+
+.tab {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.tab.active {
+    background-color: #fff;
+    border-bottom: 2px solid #fff;
+}
+
+.form-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.form {
+    display: none;
+}
+
+.form.active {
+    display: block;
 }
 
 h1 {

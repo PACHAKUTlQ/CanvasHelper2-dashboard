@@ -27,7 +27,7 @@ onDomReady(function () {
         let deg = 30 * rad - 45;
         // Custom CSS property: --beam-deg (angle of beam)
         body.style.setProperty('--beam-deg', deg + 'deg');
-    })
+    });
 
     // Event for clicking the eye
     eye.addEventListener('click', function (e) {
@@ -36,7 +36,52 @@ onDomReady(function () {
         passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
         eye.className = 'eye fa ' + (passwordInput.type === 'password' ? 'fa-eye-slash' : 'fa-eye');
         passwordInput.focus();
-    })
+    });
+
+    // Tab switching logic
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function () {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById(this.dataset.tab + 'Form').classList.add('active');
+        });
+    });
+
+    // Prevent default form submission for login form
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        submit();
+    });
+
+    // Sign up form submission
+    $('#signupForm').on('submit', function (event) {
+        event.preventDefault();
+        var jsonData = JSON.stringify({
+            username: $('#signup-username').val(),
+            password: $('#signup-password').val(),
+            url: $('#signup-url').val(),
+            bid: $('#signup-bid').val()
+        });
+
+        $.ajax({
+            url: getServerURL() + '/signup',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            headers: getAccessTokenHeaders(),
+            data: jsonData,
+            success: function (data) {
+                localStorage.setItem('accessToken', data.access_token);
+                localStorage.setItem('refreshToken', data.refresh_token);
+                console.log('Successfully signed up:', data.message);
+                setTimeout(`location.href = './login'`, 1000);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Sign up failed:', textStatus, errorThrown);
+            }
+        });
+    });
 });
 
 function submit() {
@@ -60,4 +105,25 @@ function submit() {
             alert('Login failed:', textStatus, errorThrown);
         }
     });
+}
+
+function checkPasswordMatch() {
+    var password = document.getElementById("signup-password").value;
+    var confirmPassword = document.getElementById("signup-password2").value;
+    if (password != confirmPassword) {
+        document.getElementById("signup-password2").setCustomValidity("Passwords don't match");
+        showWarningBanner();
+        document.getElementById("signup-password2").value = "";
+        document.getElementById("signup-password2").focus();
+    } else {
+        document.getElementById("signup-password2").setCustomValidity('');
+    }
+}
+
+function showWarningBanner() {
+    $('#warning-banner').text('Passwords do not match!').css('background-color', 'red');
+    $('#warning-banner').show();
+    setTimeout(function () {
+        $('#warning-banner').hide();
+    }, 3000);
 }
