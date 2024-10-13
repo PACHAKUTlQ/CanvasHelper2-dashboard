@@ -214,6 +214,7 @@ function setupConfig() {
             },
             error: function () {
                 $("#b1").html("Cannot contact with the server. Is the server running?");
+                $('.config').click();
                 showerrer();
             }
         });
